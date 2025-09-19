@@ -104,7 +104,7 @@ resource "aws_security_group" "nginx_sg" {
 # 8. Create a Key Pair for SSH access
 resource "aws_key_pair" "my_key_pair" {
   key_name   = "aws_key_pair"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1OzssOTJ9dD14SsrmlXuVegkXzm20ChJBkBgNM42XMjmbAIhkRE6cd2DQWCplsG0EucgI62rV/g7/MfsJr8+KD4cm6yl6k53H0HtHI+ni25xfBm+poEh5hs3TEkmdY+RJU1mgTMeeJijvoQIo/1UhF0/LSv4L390VVrlB8JA97OWeDHaazpPYrV/wnZZXmOVBD933o/cWbs9JmlkXvJlQfTOTeyALE4JJdL7/ELFmVVlREe/CmzptqsqLvdji2j1ogVCwDyXgoFrryHytIYjxpwNaNw5DT6ztgnRa45m+C5kj9QW15ritvk9Ju7GqmE2ClFMBStqEx8uuefkdyGoP" # <-- REPLACE WITH YOUR PUBLIC KEY
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDVZ3/+DFddYNYaWSjJAazL4Of/q3jFhfRECceTFCHKfgPwgZ6sWu+JAU81TGzzAWf+63+ZZd8sjpV4Qmzzyv45thhEIL9vpbNf1o0081FPjHDTE0w7dtbFu7i1CMaOl5S23xtgCM/PHZNrYWYejxqVmrj+eaK3X77GiFEV34uQMiNI0sC98Y0S4LxbuCSmowanF1Bwsj8oxcNxiW5gRM8wzGBTDSUTGfVbud6o4UwZVnQdNnd5mQ0AwjY34GPqmfZ3dxKGhdobntoicNtEa5rN6sPrX52OdJQno89mptCHSAOkPPOTELafV6wmXjO6/eF99ysaroRhPH0TlUGuDCBzVP1CkQ17cH2uzIOSn+GiLks7EiGtOm+UAZzRcl1kCpbgWp8mcJqYFGqsMn4Mn4KqfdUA61Ak+XThmZNVsjFYcQlQ8c6x8Vsn0R0kUV3BXSlMmcCegMjJD1lf91QFDF4bTPioTr9hc1qsEehrcD+2LiY+FPD6cIPql2BAkFlu1bmxsnyoSztKYGGJwDkzM4XwRRVxXnoXQ/JaGstRNHd33qOdJx2e0ztEauCFbekxP7CzsuUD3jZ4e4Olw28JSd7UPCu42xYkPxWT9nTiqZH3mvcMXr+PN6051xdvpJzjdzNYuW+DAvNqVNHsOe+BvExwRv2mpw8C1pz98pjjkqRFwQ== loyal@PAUL-JACKSON-PC" # <-- REPLACE WITH YOUR PUBLIC KEY
 }
 
 # 9. Provision the EC2 Instance
