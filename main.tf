@@ -103,7 +103,7 @@ resource "aws_security_group" "nginx_sg" {
 
 # 8. Create a Key Pair for SSH access
 resource "aws_key_pair" "my_key_pair" {
-  key_name   = "my-ec2-key"
+  key_name   = "aws_key_pair"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1OzssOTJ9dD14SsrmlXuVegkXzm20ChJBkBgNM42XMjmbAIhkRE6cd2DQWCplsG0EucgI62rV/g7/MfsJr8+KD4cm6yl6k53H0HtHI+ni25xfBm+poEh5hs3TEkmdY+RJU1mgTMeeJijvoQIo/1UhF0/LSv4L390VVrlB8JA97OWeDHaazpPYrV/wnZZXmOVBD933o/cWbs9JmlkXvJlQfTOTeyALE4JJdL7/ELFmVVlREe/CmzptqsqLvdji2j1ogVCwDyXgoFrryHytIYjxpwNaNw5DT6ztgnRa45m+C5kj9QW15ritvk9Ju7GqmE2ClFMBStqEx8uuefkdyGoP" # <-- REPLACE WITH YOUR PUBLIC KEY
 }
 
