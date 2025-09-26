@@ -1,5 +1,6 @@
 # main.tf
 
+
 # Specify the AWS provider and region
 terraform {
   required_providers {
@@ -10,10 +11,10 @@ terraform {
   }
 }
 
+
 provider "aws" {
   region = "us-east-1"
 }
-
 # 1. Create a VPC
 resource "aws_vpc" "my_vpc" {
   cidr_block = "10.0.0.0/16"
@@ -22,7 +23,6 @@ resource "aws_vpc" "my_vpc" {
     Name = "my-project-vpc"
   }
 }
-
 # 2. Create an Internet Gateway
 resource "aws_internet_gateway" "my_gw" {
   vpc_id = aws_vpc.my_vpc.id
@@ -30,7 +30,6 @@ resource "aws_internet_gateway" "my_gw" {
     Name = "my-project-igw"
   }
 }
-
 # 3. Create a Public Subnet
 resource "aws_subnet" "public_subnet" {
   vpc_id                  = aws_vpc.my_vpc.id
@@ -41,7 +40,6 @@ resource "aws_subnet" "public_subnet" {
     Name = "public-subnet"
   }
 }
-
 # 4. Create a Private Subnet (Not used in this lab, but good to have)
 resource "aws_subnet" "private_subnet" {
   vpc_id                  = aws_vpc.my_vpc.id
@@ -51,7 +49,6 @@ resource "aws_subnet" "private_subnet" {
     Name = "private-subnet"
   }
 }
-
 # 5. Create a Route Table for the Public Subnet
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.my_vpc.id
@@ -75,12 +72,14 @@ resource "aws_security_group" "nginx_sg" {
   name        = "nginx-security-group"
   vpc_id      = aws_vpc.my_vpc.id
 
+
   ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
 
   ingress {
     from_port   = 22
@@ -89,12 +88,14 @@ resource "aws_security_group" "nginx_sg" {
     cidr_blocks = ["0.0.0.0/0"] 
   }
 
+
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
 
   tags = {
     Name = "nginx-security-group"
@@ -103,14 +104,14 @@ resource "aws_security_group" "nginx_sg" {
 
 # 8. Create a Key Pair for SSH access
 resource "aws_key_pair" "my_key_pair" {
-  key_name   = "aws_key_pair"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDVZ3/+DFddYNYaWSjJAazL4Of/q3jFhfRECceTFCHKfgPwgZ6sWu+JAU81TGzzAWf+63+ZZd8sjpV4Qmzzyv45thhEIL9vpbNf1o0081FPjHDTE0w7dtbFu7i1CMaOl5S23xtgCM/PHZNrYWYejxqVmrj+eaK3X77GiFEV34uQMiNI0sC98Y0S4LxbuCSmowanF1Bwsj8oxcNxiW5gRM8wzGBTDSUTGfVbud6o4UwZVnQdNnd5mQ0AwjY34GPqmfZ3dxKGhdobntoicNtEa5rN6sPrX52OdJQno89mptCHSAOkPPOTELafV6wmXjO6/eF99ysaroRhPH0TlUGuDCBzVP1CkQ17cH2uzIOSn+GiLks7EiGtOm+UAZzRcl1kCpbgWp8mcJqYFGqsMn4Mn4KqfdUA61Ak+XThmZNVsjFYcQlQ8c6x8Vsn0R0kUV3BXSlMmcCegMjJD1lf91QFDF4bTPioTr9hc1qsEehrcD+2LiY+FPD6cIPql2BAkFlu1bmxsnyoSztKYGGJwDkzM4XwRRVxXnoXQ/JaGstRNHd33qOdJx2e0ztEauCFbekxP7CzsuUD3jZ4e4Olw28JSd7UPCu42xYkPxWT9nTiqZH3mvcMXr+PN6051xdvpJzjdzNYuW+DAvNqVNHsOe+BvExwRv2mpw8C1pz98pjjkqRFwQ== loyal@PAUL-JACKSON-PC" # <-- REPLACE WITH YOUR PUBLIC KEY
+  key_name   = "my_ec2_key"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDeRHPjMuiIPnXFKv4agmNVAGQ38AT1z7yjTv1XEpp3B28+Jyua+3d017/ZXvDRHFJkH+8baEhHs5qU5RIyRnxp9kO6/x0KXszSetv/qv5Ow8TQpDC5ZbymeIS9pb5Bz+adRpEpHzu6TKwxxYr2npk9MQ70KsZz0fE1aKXyiQoGd/Lp6UhtG+Fh7RPq9bhqPYoZikFKLYb3BVJDUMEnSISxw9l1enoly56wkf+9d28e5b2xjTGc2y6cLcbzGoijwhsvnzewAhQCcPTIfGy1DY/2CRvmypnIgOG3fiuptYbaOFPboiWU3gXpD8yCox8nChR48I/OK3Ogpe7XBQ2mq8oGR+ezaIi20XucMpChsc3yfVhbuARKmGM4xndqhqGwyrlKrPB0cKYmQ/XtS4+XX3Ou0HmFy0YNFt5zYSVQxkF6PO39xMUjDqmG1UstmjROx5kQ0x8PB36NFvjLKL5WNctPcNMfblPF/VoKKyUpMqEOQevB2Cm+mzA5bFRlMN87L4tr4/mOeMKFe6rV9Hu0Nm3hFdg5FFK1bspvS7sfrYlI94YKqqSLWrB7g+zA3JgidZrQalOUN6e2yTPFfn0gPxqoN+aLvNEF1+oy/8085AYzTuawZsfVS7kqCpjZ775JUBSwkABE9wI/vWSlhMoWYtRFW1s6MUi2XmELOfFqWo9bzQ== loyal@PAUL-JACKSON-PC" # <-- REPLACE WITH YOUR PUBLIC KEY
 }
 
 # 9. Provision the EC2 Instance
 resource "aws_instance" "nginx_server" {
-  ami           = "ami-0b09ffb6d8b58ca91" 
-  instance_type = "t2.micro"
+  ami           = "ami-08982f1c5bf93d976" 
+  instance_type = "t3.micro"
   subnet_id     = aws_subnet.public_subnet.id
   key_name      = aws_key_pair.my_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.nginx_sg.id]
@@ -123,6 +124,7 @@ resource "aws_instance" "nginx_server" {
               sudo systemctl start nginx
               sudo systemctl enable nginx
               EOF
+
 
   tags = {
     Name = "nginx-web-server"
