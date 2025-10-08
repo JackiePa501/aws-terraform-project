@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Image Uploader & Gallery</title>
+    <!-- Tailwind CSS CDN for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scrollbar for better gallery feel */
+        .image-gallery::-webkit-scrollbar {
+            height: 8px;
+        }
+        .image-gallery::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1; /* Gray-300 */
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans">
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold text-indigo-700">Image Uploader</h1>
+            <p class="text-gray-500 mt-2">Store and view your files using Flask and PostgreSQL.</p>
+        </header>
+
+
+        <!-- Upload Form Card -->
+        <div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-2xl border border-indigo-100 mb-10">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">Upload a New Image</h2>
+            <form method="POST" enctype="multipart/form-data" class="space-y-4">
+                <!-- File Input -->
+                <label class="block">
+                    <span class="sr-only">Choose file</span>
+                    <input type="file" name="file" accept=".png, .jpg, .jpeg, .gif"
+                           class="block w-full text-sm text-gray-500
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-full file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-indigo-50 file:text-indigo-700
+                                hover:file:bg-indigo-100"
+                    />
+                </label>
+               
+                <!-- Submit Button -->
+                <button type="submit"
+                        class="w-full px-4 py-2 text-white bg-indigo-600 rounded-lg shadow-md
+                                hover:bg-indigo-700 transition duration-300 transform hover:scale-[1.01]">
+                    <span class="font-bold">Upload Image</span>
+                </button>
+            </form>
+            <p class="text-xs text-gray-400 mt-3 text-center">Allowed: .png, .jpg, .jpeg, .gif</p>
+        </div>
+
+
+        <!-- Image Gallery Section -->
+        <section class="mt-12">
+            <h2 class="text-3xl font-bold text-gray-700 mb-6 border-b pb-2 border-gray-200">Image Gallery ({{ images | length }} total)</h2>
+           
+            {% if images %}
+            <div class="image-gallery flex overflow-x-auto overflow-y-hidden space-x-6 pb-4">
+                {% for image in images %}
+                <div class="flex-shrink-0 w-64 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition duration-300">
+                    <!-- Image Display Area -->
+                    <a href="{{ image.url }}" target="_blank" class="block">
+                        <img src="{{ url_for('static', filename='uploads/' + image.filename) }}"
+                             alt="{{ image.filename }}"
+                             class="w-full h-40 object-cover transform hover:scale-105 transition duration-500"
+                             onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Load+Error';">
+                    </a>
+                   
+                    <!-- Metadata -->
+                    <div class="p-4">
+                        <p class="text-sm font-medium text-indigo-600 truncate" title="{{ image.filename }}">{{ image.filename }}</p>
+                        <p class="text-xs text-gray-400 mt-1">Uploaded: {{ image.date }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center p-10 border-2 border-dashed border-gray-300 rounded-lg bg-white">
+                <p class="text-gray-500">No images uploaded yet. Use the form above to add the first one!</p>
+            </div>
+            {% endif %}
+
+
+        </section>
+    </div>
+</body>
+</html>
